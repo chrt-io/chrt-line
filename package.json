@@ -1,8 +1,8 @@
 {
-  "name": "chrt",
+  "name": "chrt-line",
   "version": "1.0.0",
   "description": "small atomic charting components",
-  "main": "dist/chrt.js",
+  "main": "dist/chrt-line.js",
   "module": "src/index.j",
   "watch": {
     "build": {
@@ -35,6 +35,9 @@
     "url": "https://gitlab.com/chrt/exploration/issues"
   },
   "homepage": "chrt.io",
+  "dependencies": {
+    "chrt-core": "1"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-modules-commonjs": "^7.10.1",

@@ -1,7 +1,7 @@
 {
   "name": "chrt-line",
-  "version": "1.0.0",
-  "description": "small atomic charting components",
+  "version": "0.0.0",
+  "description": "Line chart component for Chrt",
   "main": "dist/chrt-line.js",
   "module": "src/index.j",
   "watch": {

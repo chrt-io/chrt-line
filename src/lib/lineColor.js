@@ -1,5 +1,6 @@
+import { isNull } from '~/helpers';
 export default function lineColor(value) {
-  if(!value) {
+  if(isNull(value)) {
     return this.stroke;
   }
 

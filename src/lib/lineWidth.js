@@ -1,5 +1,6 @@
+import { isNull } from '~/helpers';
 export default function lineWidth(value) {
-  if(!value) {
+  if(isNull(value)) {
     return this.strokeWidth;
   }
 

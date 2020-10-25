@@ -1,13 +1,13 @@
 import { isNull } from '~/helpers';
-export default function lineOpacity(value) {
+export default function fillOpacity(value) {
   if(isNull(value)) {
-    return this.strokeOpacity;
+    return this._fillOpacity;
   }
 
   if (typeof value === 'function') {
     // something will go here
   } else {
-    this.strokeOpacity = value;
+    this._fillOpacity = value;
   }
   return this;
 }

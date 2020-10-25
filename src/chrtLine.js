@@ -1,19 +1,28 @@
 import { isNull } from '~/helpers';
 import { createSVG as create } from '~/layout';
-import { lineWidth, lineColor, lineOpacity } from './lib';
+import { lineWidth, lineColor, lineOpacity, area, fillColor, fillOpacity } from './lib';
 import { chrtGeneric } from 'chrt-core';
 
 const DEFAULT_LINE_WIDTH = 1;
 const DEAULT_LINE_COLOR = '#000';
 const DEFAULT_LINE_OPACITY = 1;
+const DEAULT_FILL_COLOR = '#000';
+const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtGeneric.call(this);
   this.type = 'series';
+  this._area = false;
+
+  this._stacked = null;
+
+  this.fields.y0 = 'y0';
 
   this.strokeWidth = DEFAULT_LINE_WIDTH;
   this.stroke = DEAULT_LINE_COLOR;
   this.strokeOpacity = DEFAULT_LINE_OPACITY;
+  this._fill = DEAULT_FILL_COLOR;
+  this._fillOpacity = DEFAULT_FILL_OPACITY;
 
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
@@ -23,18 +32,47 @@ function chrtLine() {
         this.path = create('path');
         this.g.appendChild(this.path);
       }
+      // console.log(_data)
+      // const y = scales['y'](d[this._stacked ? `stacked_${this.fields.y}` : this.fields.y]);
 
+      const dataForLine = this._stacked ?
+      _data.map(d => ({
+        x: d[this.fields.x],
+        y: d[`stacked_${this.fields.y}`],
+        y0: d[this.fields.y0],
+      })) :
+      _data;
 
+      let dataForAreaBaseline = [];
+      if(this._area) {
+        dataForAreaBaseline = this._stacked ? [...dataForLine].reverse().map(d => ({
+          x: d[this.fields.x],
+          y: d[this.fields.y0],
+        })) : [
+          {
+            x: _data[_data.length - 1][this.fields.x],
+            y: this.parentNode.scales[this.fields.y].domain[0],
+          },
+          {
+            x: _data[0][this.fields.x],
+            y: this.parentNode.scales[this.fields.y].domain[0],
+          },];
+      }
 
-      const d = this.interpolationFunction(_data);
+      // console.log('dataForLine',dataForLine)
+      // console.log('dataForAreaBaseline',dataForAreaBaseline)
+
+      const d = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
+
       this.path.setAttribute('d', d.join(''));
-      this.path.setAttribute('fill', 'none');
+      this.path.setAttribute('fill', this._area ? this._fill : 'none');
+      this.path.setAttribute('fill-opacity', this._area ? this._fillOpacity : 'none');
       this.path.setAttribute('stroke', this.stroke);
       this.path.setAttribute('stroke-width', this.strokeWidth);
       this.path.setAttribute('stroke-opacity', this.strokeOpacity);
       this.path.setAttribute('stroke-linejoin', 'round');
 
-      const singlePoints = _data.filter((d, i, points) => {
+      const singlePoints = dataForLine.filter((d, i, points) => {
         return (isNull(points[i - 1]) || isNull(points[i - 1][this.fields.y]))
                 &&
                 !isNull(d[this.fields.y])
@@ -76,6 +114,9 @@ chrtLine.prototype = Object.assign(chrtLine.prototype, {
   width: lineWidth,
   color: lineColor,
   opacity: lineOpacity,
+  area,
+  fill: fillColor,
+  fillOpacity,
 });
 
 export default chrtLine;

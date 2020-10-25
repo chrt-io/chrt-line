@@ -1,6 +1,6 @@
 {
   "name": "chrt-line",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Line chart component for Chrt",
   "main": "dist/chrt-line.js",
   "module": "src/index.j",

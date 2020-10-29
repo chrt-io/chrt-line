@@ -1,7 +1,7 @@
+import { chrtGeneric } from 'chrt-core';
 import { isNull } from '~/helpers';
 import { createSVG as create } from '~/layout';
 import { lineWidth, lineColor, lineOpacity, area, fillColor, fillOpacity } from './lib';
-import { chrtGeneric } from 'chrt-core';
 
 const DEFAULT_LINE_WIDTH = 1;
 const DEAULT_LINE_COLOR = '#000';
@@ -11,6 +11,7 @@ const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtGeneric.call(this);
+  // console.log(this.render)
   this.type = 'series';
   this._area = false;
 
@@ -32,8 +33,11 @@ function chrtLine() {
         this.path = create('path');
         this.g.appendChild(this.path);
       }
-      // console.log(_data)
-      // const y = scales['y'](d[this._stacked ? `stacked_${this.fields.y}` : this.fields.y]);
+      if (this._area && !this.areaPath) {
+        this.areaPath = create('path');
+        this.g.appendChild(this.areaPath);
+      }
+
 
       const dataForLine = this._stacked ?
       _data.map(d => ({
@@ -62,15 +66,19 @@ function chrtLine() {
       // console.log('dataForLine',dataForLine)
       // console.log('dataForAreaBaseline',dataForAreaBaseline)
 
-      const d = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
+      const dArea = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
+      this.areaPath.setAttribute('d', dArea.join(''));
+      this.areaPath.setAttribute('fill', this._fill);
+      this.areaPath.setAttribute('fill-opacity', this._fillOpacity);
+      this.areaPath.setAttribute('stroke', 'none');
 
+      const d = this.interpolationFunction([].concat(dataForLine));
       this.path.setAttribute('d', d.join(''));
-      this.path.setAttribute('fill', this._area ? this._fill : 'none');
-      this.path.setAttribute('fill-opacity', this._area ? this._fillOpacity : 'none');
       this.path.setAttribute('stroke', this.stroke);
       this.path.setAttribute('stroke-width', this.strokeWidth);
       this.path.setAttribute('stroke-opacity', this.strokeOpacity);
       this.path.setAttribute('stroke-linejoin', 'round');
+      this.path.setAttribute('fill', 'none');
 
       const singlePoints = dataForLine.filter((d, i, points) => {
         return (isNull(points[i - 1]) || isNull(points[i - 1][this.fields.y]))

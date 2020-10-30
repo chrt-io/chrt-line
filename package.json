@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "Line chart component for Chrt",
   "main": "dist/chrt-line.js",
-  "module": "src/index.js",
+  "module": "dist/chrt-line.esm.js",
   "watch": {
     "build": {
       "patterns": [

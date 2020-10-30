@@ -1,6 +1,6 @@
 import { chrtGeneric } from 'chrt-core';
-import { isNull } from '~/helpers';
-import { createSVG as create } from '~/layout';
+import { isNull } from './helpers';
+import { createSVG as create } from './layout';
 import { lineWidth, lineColor, lineOpacity, area, fillColor, fillOpacity } from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
@@ -66,7 +66,7 @@ function chrtLine() {
       // console.log('dataForLine',dataForLine)
       // console.log('dataForAreaBaseline',dataForAreaBaseline)
 
-      if (this._area && !this.areaPath) {
+      if (this._area && this.areaPath) {
         const dArea = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
         this.areaPath.setAttribute('d', dArea.join(''));
         this.areaPath.setAttribute('fill', this._fill);
@@ -129,6 +129,8 @@ chrtLine.prototype = Object.assign(chrtLine.prototype, {
   fillOpacity,
 });
 
+// export default chrtLine;
+
 export default function() {
   return new chrtLine();
-};
+}

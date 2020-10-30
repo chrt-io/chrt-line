@@ -66,11 +66,13 @@ function chrtLine() {
       // console.log('dataForLine',dataForLine)
       // console.log('dataForAreaBaseline',dataForAreaBaseline)
 
-      const dArea = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
-      this.areaPath.setAttribute('d', dArea.join(''));
-      this.areaPath.setAttribute('fill', this._fill);
-      this.areaPath.setAttribute('fill-opacity', this._fillOpacity);
-      this.areaPath.setAttribute('stroke', 'none');
+      if (this._area && !this.areaPath) {
+        const dArea = this.interpolationFunction([].concat(dataForLine, dataForAreaBaseline));
+        this.areaPath.setAttribute('d', dArea.join(''));
+        this.areaPath.setAttribute('fill', this._fill);
+        this.areaPath.setAttribute('fill-opacity', this._fillOpacity);
+        this.areaPath.setAttribute('stroke', 'none');
+      }
 
       const d = this.interpolationFunction([].concat(dataForLine));
       this.path.setAttribute('d', d.join(''));
@@ -127,4 +129,6 @@ chrtLine.prototype = Object.assign(chrtLine.prototype, {
   fillOpacity,
 });
 
-export default chrtLine;
+export default function() {
+  return new chrtLine();
+};

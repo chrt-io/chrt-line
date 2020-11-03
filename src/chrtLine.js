@@ -27,8 +27,11 @@ function chrtLine() {
 
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
-    // console.log('this.draw', _data)
+
     if (!isNull(_data)) {
+
+      this.hasCustomBaseline = this._area && _data.some(d => !isNull(d[this.fields.y0]));
+      // console.log('hasCustomBaseline', this.hasCustomBaseline)
       if (!this.path) {
         this.path = create('path');
         this.g.appendChild(this.path);
@@ -38,18 +41,17 @@ function chrtLine() {
         this.g.appendChild(this.areaPath);
       }
 
-
-      const dataForLine = this._stacked ?
+      const dataForLine = (this._stacked || this.hasCustomBaseline) ?
       _data.map(d => ({
         x: d[this.fields.x],
-        y: d[`stacked_${this.fields.y}`],
+        y: this._stacked ? d[`stacked_${this.fields.y}`] : d[this.fields.y],
         y0: d[this.fields.y0],
       })) :
       _data;
 
       let dataForAreaBaseline = [];
       if(this._area) {
-        dataForAreaBaseline = this._stacked ? [...dataForLine].reverse().map(d => ({
+        dataForAreaBaseline = (this._stacked  || this.hasCustomBaseline) ? [...dataForLine].reverse().map(d => ({
           x: d[this.fields.x],
           y: d[this.fields.y0],
         })) : [

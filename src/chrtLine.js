@@ -11,13 +11,14 @@ const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtGeneric.call(this);
+  // console.log(chrtGeneric)
   // console.log(this.render)
   this.type = 'series';
   this._area = false;
 
   this._stacked = null;
 
-  this.fields.y0 = 'y0';
+  // this.fields.y0 = 'y0';
 
   this.strokeWidth = DEFAULT_LINE_WIDTH;
   this.stroke = DEAULT_LINE_COLOR;
@@ -27,6 +28,20 @@ function chrtLine() {
 
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
+
+    //console.log('LINECHART FIELDS', this.fields)
+    if(isNull(this.fields.x)) {
+      this.fields.x = this.parentNode.scales.x[this.scales.x].field;
+    }
+    if(isNull(this.fields.y)) {
+      //console.log('this.scales', this.scales)
+      //console.log('this.parentNode.scales', this.parentNode.scales)
+      this.fields.y = this.parentNode.scales.y[this.scales.y].field;
+    }
+    if(isNull(this.fields.y0)) {
+      this.fields.y0 = `${this.parentNode.scales.y[this.scales.y].field}0`;
+    }
+    // console.log('LINECHART FIELDS', this.fields)
 
     if (!isNull(_data)) {
 
@@ -57,11 +72,11 @@ function chrtLine() {
         })) : [
           {
             x: _data[_data.length - 1][this.fields.x],
-            y: this.parentNode.scales[this.fields.y].domain[0],
+            y: this.parentNode.scales.y[this.scales.y].domain[0],
           },
           {
             x: _data[0][this.fields.x],
-            y: this.parentNode.scales[this.fields.y].domain[0],
+            y: this.parentNode.scales.y[this.scales.y].domain[0],
           },];
       }
 
@@ -75,7 +90,8 @@ function chrtLine() {
         this.areaPath.setAttribute('fill-opacity', this._fillOpacity);
         this.areaPath.setAttribute('stroke', 'none');
       }
-
+      // console.log('LINE CHART', dataForLine)
+      // console.log(this)
       const d = this.interpolationFunction([].concat(dataForLine));
       this.path.setAttribute('d', d.join(''));
       this.path.setAttribute('stroke', this.stroke);
@@ -105,8 +121,8 @@ function chrtLine() {
         });
       }
       this.points.forEach(d => {
-        d.circle.setAttribute('cx', this.parentNode.scales['x'](d.point[this.fields.x]));
-        d.circle.setAttribute('cy', this.parentNode.scales['y'](d.point[this.fields.y]));
+        d.circle.setAttribute('cx', this.parentNode.scales.x[this.scales.x](d.point[this.fields.x]));
+        d.circle.setAttribute('cy', this.parentNode.scales.x[this.scales.y](d.point[this.fields.y]));
         d.circle.setAttribute('fill', this.stroke);
         d.circle.setAttribute('r', this.strokeWidth);
       })

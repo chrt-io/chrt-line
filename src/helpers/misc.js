@@ -21,3 +21,7 @@ export function hasData(obj) {
 export function isInfinity(value) {
   return !isFinite(value);
 }
+
+export function oppositeSigns(x, y) { 
+    return ((x ^ y) < 0);
+}

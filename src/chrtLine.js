@@ -1,7 +1,7 @@
 import { chrtGeneric } from 'chrt-core';
 import { isNull } from './helpers';
 import { createSVG as create } from './layout';
-import { lineWidth, lineColor, lineOpacity, area, fillColor, fillOpacity } from './lib';
+import { lineWidth, lineColor, lineOpacity, area, fillColor, fillOpacity, zero } from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
 const DEAULT_LINE_COLOR = '#000';
@@ -66,17 +66,21 @@ function chrtLine() {
 
       let dataForAreaBaseline = [];
       if(this._area) {
+        const yDomain = this.parentNode.scales.y[this.scales.y].domain;
+        let zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.min(...yDomain);
+        zero = !isNull(this._zero) ? this._zero : zero;
+
         dataForAreaBaseline = (this._stacked  || this.hasCustomBaseline) ? [...dataForLine].reverse().map(d => ({
           x: d[this.fields.x],
           y: d[this.fields.y0],
         })) : [
           {
             x: _data[_data.length - 1][this.fields.x],
-            y: this.parentNode.scales.y[this.scales.y].domain[0],
+            y: zero,
           },
           {
             x: _data[0][this.fields.x],
-            y: this.parentNode.scales.y[this.scales.y].domain[0],
+            y: zero,
           },];
       }
 
@@ -145,6 +149,7 @@ chrtLine.prototype = Object.assign(chrtLine.prototype, {
   area,
   fill: fillColor,
   fillOpacity,
+  zero,
 });
 
 // export default chrtLine;

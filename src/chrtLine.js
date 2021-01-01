@@ -1,6 +1,6 @@
-import { chrtGeneric } from "chrt-core";
-import { isNull } from "./helpers";
-import { createSVG as create } from "./layout";
+import { chrtGeneric } from 'chrt-core';
+import { isNull } from './helpers';
+import { createSVG as create } from './layout';
 import {
   lineWidth,
   lineColor,
@@ -9,19 +9,19 @@ import {
   fillColor,
   fillOpacity,
   zero,
-} from "./lib";
+} from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
-const DEAULT_LINE_COLOR = "#000";
+const DEAULT_LINE_COLOR = '#000';
 const DEFAULT_LINE_OPACITY = 1;
-const DEAULT_FILL_COLOR = "#000";
+const DEAULT_FILL_COLOR = '#000';
 const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtGeneric.call(this);
   // console.log(chrtGeneric)
   // console.log(this.render)
-  this.type = "series";
+  this.type = 'series';
   this._area = false;
 
   this._stacked = null;
@@ -59,7 +59,7 @@ function chrtLine() {
         this._area && _data.some((d) => !isNull(d[this.fields.y0]));
       // console.log('hasCustomBaseline', this.hasCustomBaseline)
 
-      let datasetsForLine = _data.reduce((acc, d, i) => {
+      let datasetsForLine = _data.reduce((acc, d) => {
         if (isNull(d[this.fields.y])) {
           acc.push([]);
           return acc;
@@ -86,12 +86,12 @@ function chrtLine() {
 
       datasetsForLine.forEach((dataset, i) => {
         if (!this.paths[i]) {
-          this.paths[i] = create("path");
+          this.paths[i] = create('path');
           this.paths[i].setAttribute('data-id', `path-${i}`)
           this.g.appendChild(this.paths[i]);
         }
         if (this._area && !this.areaPaths[i]) {
-          this.areaPaths[i] = create("path");
+          this.areaPaths[i] = create('path');
           this.areaPaths[i].setAttribute('data-id', `area-path-${i}`)
           this.g.appendChild(this.areaPaths[i]);
         }
@@ -129,10 +129,10 @@ function chrtLine() {
           const dArea = this.interpolationFunction(
             [].concat(datasetsForLine[i], dataset)
           );
-          areaPath.setAttribute("d", dArea.join(""));
-          areaPath.setAttribute("fill", this._fill);
-          areaPath.setAttribute("fill-opacity", this._fillOpacity);
-          areaPath.setAttribute("stroke", "none");
+          areaPath.setAttribute('d', dArea.join(''));
+          areaPath.setAttribute('fill', this._fill);
+          areaPath.setAttribute('fill-opacity', this._fillOpacity);
+          areaPath.setAttribute('stroke', 'none');
         })
 
       }
@@ -142,12 +142,12 @@ function chrtLine() {
         .forEach((dataset, i) => {
           const d = this.interpolationFunction([].concat(dataset));
           const path = this.paths[i];
-          path.setAttribute("d", d.join(""));
-          path.setAttribute("stroke", this.stroke);
-          path.setAttribute("stroke-width", this.strokeWidth);
-          path.setAttribute("stroke-opacity", this.strokeOpacity);
-          path.setAttribute("stroke-linejoin", "round");
-          path.setAttribute("fill", "none");
+          path.setAttribute('d', d.join(''));
+          path.setAttribute('stroke', this.stroke);
+          path.setAttribute('stroke-width', this.strokeWidth);
+          path.setAttribute('stroke-opacity', this.strokeOpacity);
+          path.setAttribute('stroke-linejoin', 'round');
+          path.setAttribute('fill', 'none');
         });
 
       datasetsForPoints
@@ -164,7 +164,7 @@ function chrtLine() {
           if (!this.points) {
             this.points = [];
             singlePoints.forEach((point) => {
-              const circle = create("circle");
+              const circle = create('circle');
               this.points.push({
                 circle,
                 point,
@@ -174,15 +174,15 @@ function chrtLine() {
           }
           this.points.forEach((d) => {
             d.circle.setAttribute(
-              "cx",
+              'cx',
               this.parentNode.scales.x[this.scales.x](d.point[this.fields.x])
             );
             d.circle.setAttribute(
-              "cy",
+              'cy',
               this.parentNode.scales.y[this.scales.y](d.point[this.fields.y])
             );
-            d.circle.setAttribute("fill", this.stroke);
-            d.circle.setAttribute("r", this.strokeWidth);
+            d.circle.setAttribute('fill', this.stroke);
+            d.circle.setAttribute('r', this.strokeWidth);
           });
         });
     }

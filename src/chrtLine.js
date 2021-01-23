@@ -9,6 +9,7 @@ import {
   fillColor,
   fillOpacity,
   zero,
+  sort,
 } from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
@@ -25,6 +26,8 @@ function chrtLine() {
   this._area = false;
 
   this._stacked = null;
+
+  this._sortedData = true;
 
   // this.fields.y0 = 'y0';
 
@@ -80,6 +83,19 @@ function chrtLine() {
         acc[acc.length - 1].push(datumForLine);
         return acc;
       }, []);
+
+      if(this._sortedData) {
+        const _scaleX = this.parentNode.scales.x[this.scales.x];
+        datasetsForLine.forEach(dataset => {
+          dataset.sort((a,b) => {
+            if(_scaleX.transformation === 'ordinal') {
+              return _scaleX.domain.indexOf(a[this.fields.x]) - _scaleX.domain.indexOf(b[this.fields.x]);
+            } else {
+              return a[this.fields.x] - b[this.fields.x];
+            }
+          })
+        })
+      }
 
       const datasetsForPoints = datasetsForLine.filter(dataset => dataset.length === 1);
       datasetsForLine = datasetsForLine.filter(dataset => dataset.length > 1);
@@ -205,6 +221,7 @@ chrtLine.prototype = Object.assign(chrtLine.prototype, {
   fill: fillColor,
   fillOpacity,
   zero,
+  sort,
 });
 
 // export default chrtLine;

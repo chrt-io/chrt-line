@@ -40,8 +40,12 @@ function chrtLine() {
   this.paths = [];
   this.areaPaths = [];
 
+  this._classNames = ['chrt-line'];
+
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
+
+    this._classNames.forEach(d => this.g.classList.add(d));
 
     //console.log('LINECHART FIELDS', this.fields)
     if (isNull(this.fields.x)) {

@@ -1,4 +1,4 @@
-export default function area(value = true) {
+export default function area(value = 'bottom') {
   if (typeof value === 'function') {
     // something will go here
   } else {

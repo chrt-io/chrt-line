@@ -1,6 +1,6 @@
-import { chrtGeneric } from "chrt-core";
-import { isNull } from "./helpers";
-import { createSVG as create } from "./layout";
+import { chrtGeneric } from 'chrt-core';
+import { isNull } from './helpers';
+import { createSVG as create } from './layout';
 import {
   lineWidth,
   lineColor,
@@ -10,19 +10,19 @@ import {
   fillOpacity,
   zero,
   sort,
-} from "./lib";
+} from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
-const DEAULT_LINE_COLOR = "#000";
+const DEAULT_LINE_COLOR = '#000';
 const DEFAULT_LINE_OPACITY = 1;
-const DEAULT_FILL_COLOR = "#000";
+const DEAULT_FILL_COLOR = '#000';
 const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtGeneric.call(this);
   // console.log(chrtGeneric)
   // console.log(this.render)
-  this.type = "series";
+  this.type = 'series';
   this._area = false;
 
   this._stacked = null;
@@ -30,10 +30,10 @@ function chrtLine() {
   this._sortedData = true;
 
   const coords = {
-    x: "x",
-    y: "y",
-    x0: "x0",
-    y0: "y0",
+    x: 'x',
+    y: 'y',
+    x0: 'x0',
+    y0: 'y0',
   };
 
   // this.fields.y0 = 'y0';
@@ -47,7 +47,7 @@ function chrtLine() {
   this.paths = [];
   this.areaPaths = [];
 
-  this._classNames = ["chrt-line"];
+  this._classNames = ['chrt-line'];
 
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
@@ -81,16 +81,16 @@ function chrtLine() {
         .domain;
       let zero = 0;
       switch (this._area) {
-        case "left":
+        case 'left':
           zero = xDomain[0] < 0 || xDomain[1] < 0 ? 0 : Math.min(...xDomain);
           break;
-        case "right":
+        case 'right':
           zero = xDomain[0] < 0 || xDomain[1] < 0 ? 0 : Math.max(...xDomain);
           break;
-        case "top":
+        case 'top':
           zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.max(...yDomain);
           break;
-        case "bottom":
+        case 'bottom':
         default:
           zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.min(...yDomain);
       }
@@ -130,15 +130,15 @@ function chrtLine() {
         const _scaleX = this.parentNode.scales[coords.x][this.scales[coords.x]];
         datasetsForLine.forEach((dataset) => {
           dataset.sort((a, b) => {
-            if (_scaleX.transformation === "ordinal") {
+            if (_scaleX.transformation === 'ordinal') {
               return (
-                (coords.x === "y" ? -1 : 1) *
+                (coords.x === 'y' ? -1 : 1) *
                 (_scaleX.domain.indexOf(a[this.fields[coords.x]]) -
                   _scaleX.domain.indexOf(b[this.fields[coords.x]]))
               );
             } else {
               return (
-                (coords.x === "y" ? -1 : 1) *
+                (coords.x === 'y' ? -1 : 1) *
                 (a[this.fields[coords.x]] - b[this.fields[coords.x]])
               );
             }
@@ -153,20 +153,20 @@ function chrtLine() {
 
       datasetsForLine.forEach((dataset, i) => {
         if (!this.paths[i]) {
-          this.paths[i] = create("path");
-          this.paths[i].setAttribute("data-id", `path-${i}`);
+          this.paths[i] = create('path');
+          this.paths[i].setAttribute('data-id', `path-${i}`);
           this.g.appendChild(this.paths[i]);
         }
         if (this._area && !this.areaPaths[i]) {
-          this.areaPaths[i] = create("path");
-          this.areaPaths[i].setAttribute("data-id", `area-path-${i}`);
+          this.areaPaths[i] = create('path');
+          this.areaPaths[i].setAttribute('data-id', `area-path-${i}`);
           this.g.appendChild(this.areaPaths[i]);
         }
       });
 
       const datasetsForArea = [];
       if (this._area) {
-        const horizontalArea = ["left", "right"].indexOf(this._area) > -1;
+        const horizontalArea = ['left', 'right'].indexOf(this._area) > -1;
         // console.log(
         //   "AREA",
         //   this._area,
@@ -223,10 +223,10 @@ function chrtLine() {
             [].concat(datasetsForLine[i], dataset)
           );
           // console.log("dArea", dArea);
-          areaPath.setAttribute("d", dArea.join(""));
-          areaPath.setAttribute("fill", this._fill);
-          areaPath.setAttribute("fill-opacity", this._fillOpacity);
-          areaPath.setAttribute("stroke", "none");
+          areaPath.setAttribute('d', dArea.join(''));
+          areaPath.setAttribute('fill', this._fill);
+          areaPath.setAttribute('fill-opacity', this._fillOpacity);
+          areaPath.setAttribute('stroke', 'none');
         });
       }
       // console.log('LINE CHART', datasetsForLine)
@@ -236,12 +236,12 @@ function chrtLine() {
         const d = this.interpolationFunction([].concat(dataset));
         // console.log('d', d)
         const path = this.paths[i];
-        path.setAttribute("d", d.join(""));
-        path.setAttribute("stroke", this.stroke);
-        path.setAttribute("stroke-width", this.strokeWidth);
-        path.setAttribute("stroke-opacity", this.strokeOpacity);
-        path.setAttribute("stroke-linejoin", "round");
-        path.setAttribute("fill", "none");
+        path.setAttribute('d', d.join(''));
+        path.setAttribute('stroke', this.stroke);
+        path.setAttribute('stroke-width', this.strokeWidth);
+        path.setAttribute('stroke-opacity', this.strokeOpacity);
+        path.setAttribute('stroke-linejoin', 'round');
+        path.setAttribute('fill', 'none');
       });
 
       datasetsForPoints.forEach((dataset) => {
@@ -259,7 +259,7 @@ function chrtLine() {
         if (!this.points) {
           this.points = [];
           singlePoints.forEach((point) => {
-            const circle = create("circle");
+            const circle = create('circle');
             this.points.push({
               circle,
               point,
@@ -269,19 +269,19 @@ function chrtLine() {
         }
         this.points.forEach((d) => {
           d.circle.setAttribute(
-            "cx",
+            'cx',
             this.parentNode.scales[coords.x][this.scales[coords.x]](
               d.point[this.fields[coords.x]]
             )
           );
           d.circle.setAttribute(
-            "cy",
+            'cy',
             this.parentNode.scales[coords.y][this.scales[coords.y]](
               d.point[this.fields[coords.y]]
             )
           );
-          d.circle.setAttribute("fill", this.stroke);
-          d.circle.setAttribute("r", this.strokeWidth);
+          d.circle.setAttribute('fill', this.stroke);
+          d.circle.setAttribute('r', this.strokeWidth);
         });
       });
     }

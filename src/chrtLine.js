@@ -1,4 +1,5 @@
-import { chrtGeneric } from 'chrt-core';
+import chrtGeneric from 'chrt-object';
+import { line } from 'chrt-interpolations';
 import { isNull } from './helpers';
 import { createSVG as create } from './layout';
 import {
@@ -36,7 +37,7 @@ function chrtLine() {
     y0: 'y0',
   };
 
-  // this.fields.y0 = 'y0';
+  this.interpolationFunction = line;
 
   this.strokeWidth = DEFAULT_LINE_WIDTH;
   this.stroke = DEAULT_LINE_COLOR;

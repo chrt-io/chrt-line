@@ -36,7 +36,8 @@
   },
   "homepage": "chrt.io",
   "dependencies": {
-    "chrt-core": "^0.0.30"
+    "chrt-interpolations": "0.0.7",
+    "chrt-object": "0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",

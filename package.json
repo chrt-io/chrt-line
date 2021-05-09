@@ -36,7 +36,7 @@
   },
   "homepage": "chrt.io",
   "dependencies": {
-    "chrt-interpolations": "0.0.7",
+    "chrt-interpolations": "0.0.8",
     "chrt-object": "0.0.2"
   },
   "devDependencies": {

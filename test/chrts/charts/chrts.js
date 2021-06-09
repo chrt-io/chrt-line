@@ -1,1 +1,11 @@
 export { default as columnsXOrdinalYLinear } from './x-ordinal-y-linear.js';
+export { default as areaChart } from './area-chart.js';
+export { default as areaChartTop } from './area-chart-top.js';
+export { default as setZeroAsNonZero } from './set-zero-as-non-zero.js';
+export { default as nullValues } from './null-values.js';
+export { default as horizontalArea } from './horizontal-area.js';
+export { default as horizontalAreaRight } from './horizontal-area-right.js';
+export { default as stackedArea } from './stacked-area-chart.js';
+export { default as dataFromChrt } from './data-from-chrt.js';
+export { default as negativeYDomain } from './y-negative-domain.js';
+export { default as unsortedData } from './unsorted-data.js';

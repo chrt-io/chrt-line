@@ -23,6 +23,7 @@ const data = [
 export default async function(container) {
   return chrt.Chrt()
     .node(container)
+    .data(data)
     .size(600, 200)
     .x({scale:'ordinal'})
     .y({scale:'linear'})
@@ -31,10 +32,6 @@ export default async function(container) {
     .add(chrt.yAxis())
     .add(
       chrtLine()
-        .data(data, d => ({
-          x: d.x,
-          y: d.y,
-        }))
         .width(0.5)
         .color('#f00')
         .opacity(0.8)

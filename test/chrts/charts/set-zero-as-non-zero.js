@@ -12,11 +12,11 @@ const data = [
   },
   {
     x: 'c',
-    y: 14
+    y: -14
   },
   {
     x: 'd',
-    y: 22
+    y: -4
   }
 ];
 
@@ -38,5 +38,7 @@ export default async function(container) {
         .width(0.5)
         .color('#f00')
         .opacity(0.8)
+        .area()
+        .zero(2)
     );
 }

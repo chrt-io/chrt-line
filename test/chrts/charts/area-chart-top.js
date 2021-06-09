@@ -27,7 +27,7 @@ export default async function(container) {
     .x({scale:'ordinal'})
     .y({scale:'linear'})
     // .y({domain:[1,10000], scale:'log'})
-    .add(chrt.xAxis())
+    .add(chrt.xAxis().orient('top'))
     .add(chrt.yAxis())
     .add(
       chrtLine()
@@ -35,8 +35,11 @@ export default async function(container) {
           x: d.x,
           y: d.y,
         }))
-        .width(0.5)
-        .color('#f00')
+        .width(2)
+        .color('#333')
         .opacity(0.8)
+        .area('top')
+        .fill('#f00')
+        .fillOpacity(0.5)
     );
 }

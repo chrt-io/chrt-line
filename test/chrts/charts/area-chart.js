@@ -35,8 +35,11 @@ export default async function(container) {
           x: d.x,
           y: d.y,
         }))
-        .width(0.5)
-        .color('#f00')
+        .width(2)
+        .color('#333')
         .opacity(0.8)
+        .area()
+        .fill('#f00')
+        .fillOpacity(0.5)
     );
 }

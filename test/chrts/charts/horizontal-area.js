@@ -3,20 +3,20 @@ import chrtLine from '~/chrtLine'
 
 const data = [
   {
-    x: 'a',
-    y: 10
+    y: 'a',
+    x: 10
   },
   {
-    x: 'b',
-    y: 14
+    y: 'b',
+    x: 14
   },
   {
-    x: 'c',
-    y: 14
+    y: 'c',
+    x: 14
   },
   {
-    x: 'd',
-    y: 22
+    y: 'd',
+    x: 22
   }
 ];
 
@@ -24,10 +24,10 @@ export default async function(container) {
   return chrt.Chrt()
     .node(container)
     .size(600, 200)
-    .x({scale:'ordinal'})
-    .y({scale:'linear'})
+    .x({scale:'linear'})
+    .y({scale:'ordinal'})
     // .y({domain:[1,10000], scale:'log'})
-    .add(chrt.xAxis())
+    .add(chrt.xAxis().hideAxis())
     .add(chrt.yAxis())
     .add(
       chrtLine()
@@ -38,5 +38,6 @@ export default async function(container) {
         .width(0.5)
         .color('#f00')
         .opacity(0.8)
+        .area('left')
     );
 }

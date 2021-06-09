@@ -10,7 +10,7 @@ import {
   fillColor,
   fillOpacity,
   zero,
-  sort,
+  sort
 } from './lib';
 
 const DEFAULT_LINE_WIDTH = 1;
@@ -24,26 +24,27 @@ function chrtLine() {
   // console.log(chrtGeneric)
   // console.log(this.render)
   this.type = 'series';
-  this._area = false;
+  // _area = false;
+  this.attr('area', false);
 
   this._stacked = null;
 
-  this._sortedData = true;
+  this.attr('sortedData', true);
 
   const coords = {
     x: 'x',
     y: 'y',
     x0: 'x0',
-    y0: 'y0',
+    y0: 'y0'
   };
 
   this.interpolationFunction = line;
 
-  this.strokeWidth = DEFAULT_LINE_WIDTH;
-  this.stroke = DEAULT_LINE_COLOR;
-  this.strokeOpacity = DEFAULT_LINE_OPACITY;
-  this._fill = DEAULT_FILL_COLOR;
-  this._fillOpacity = DEFAULT_FILL_OPACITY;
+  this.attr('strokeWidth', DEFAULT_LINE_WIDTH);
+  this.attr('stroke', DEAULT_LINE_COLOR);
+  this.attr('strokeOpacity', DEFAULT_LINE_OPACITY);
+  this.attr('fill', DEAULT_FILL_COLOR);
+  this.attr('fillOpacity', DEFAULT_FILL_OPACITY);
 
   this.paths = [];
   this.areaPaths = [];
@@ -51,10 +52,9 @@ function chrtLine() {
   this._classNames = ['chrt-line'];
 
   this.draw = () => {
-
     const _data = this._data.length ? this._data : this.parentNode._data;
-
-    this._classNames.forEach((d) => this.g.classList.add(d));
+    const _area = this.attr('area')();
+    this._classNames.forEach(d => this.g.classList.add(d));
 
     //console.log('LINECHART FIELDS', this.fields)
     if (isNull(this.fields[coords.x])) {
@@ -83,7 +83,7 @@ function chrtLine() {
         .domain;
       // console.log(this.fields.x,coords.x,this.scales,'---->',this.scales[coords.x])
       let zero = 0;
-      switch (this._area) {
+      switch (_area) {
         case 'left':
           zero = xDomain[0] < 0 || xDomain[1] < 0 ? 0 : Math.min(...xDomain);
           break;
@@ -97,15 +97,16 @@ function chrtLine() {
         default:
           zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.min(...yDomain);
       }
-      // let zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.min(...yDomain);
-      zero = !isNull(this._zero) ? this._zero : zero;
+
+      const _zero = this.attr('zero');
+      zero = !isNull(_zero) ? _zero() : zero;
 
       this.hasCustomBaseline =
-        this._area && _data.some((d) => !isNull(d[this.fields[coords.y0]]));
+        _area && _data.some(d => !isNull(d[this.fields[coords.y0]]));
       // console.log('hasCustomBaseline', this.hasCustomBaseline)
 
       let datasetsForLine = _data.reduce((acc, d) => {
-        if (isNull(d[this.fields[coords.y]])) {
+        if (isNull(d) || isNull(d[this.fields[coords.y]])) {
           acc.push([]);
           return acc;
         }
@@ -123,7 +124,7 @@ function chrtLine() {
                   : d[this.fields[coords.y]],
                 y0: !isNull(d[this.fields[coords.y0]])
                   ? d[this.fields[coords.y0]]
-                  : zero,
+                  : zero
                 // x0: !isNull(d[this.fields[coords.x0]]) ? d[this.fields[coords.x0]] : zero,
               }
             : d;
@@ -131,9 +132,9 @@ function chrtLine() {
         return acc;
       }, []);
 
-      if (this._sortedData) {
+      if (this.attr('sortedData')()) {
         const _scaleX = this.parentNode.scales[coords.x][this.scales[coords.x]];
-        datasetsForLine.forEach((dataset) => {
+        datasetsForLine.forEach(dataset => {
           dataset.sort((a, b) => {
             if (_scaleX.transformation === 'ordinal') {
               return (
@@ -152,9 +153,9 @@ function chrtLine() {
       }
 
       const datasetsForPoints = datasetsForLine.filter(
-        (dataset) => dataset.length === 1
+        dataset => dataset.length === 1
       );
-      datasetsForLine = datasetsForLine.filter((dataset) => dataset.length > 1);
+      datasetsForLine = datasetsForLine.filter(dataset => dataset.length > 1);
 
       datasetsForLine.forEach((dataset, i) => {
         if (!this.paths[i]) {
@@ -162,7 +163,7 @@ function chrtLine() {
           this.paths[i].setAttribute('data-id', `path-${i}`);
           this.g.appendChild(this.paths[i]);
         }
-        if (this._area && !this.areaPaths[i]) {
+        if (_area && !this.areaPaths[i]) {
           this.areaPaths[i] = create('path');
           this.areaPaths[i].setAttribute('data-id', `area-path-${i}`);
           this.g.appendChild(this.areaPaths[i]);
@@ -170,11 +171,11 @@ function chrtLine() {
       });
 
       const datasetsForArea = [];
-      if (this._area) {
-        const horizontalArea = ['left', 'right'].indexOf(this._area) > -1;
+      if (_area) {
+        const horizontalArea = ['left', 'right'].indexOf(_area) > -1;
         // console.log(
         //   "AREA",
-        //   this._area,
+        //   _area,
         //   "zero",
         //   zero,
         //   "xDomain:",
@@ -182,22 +183,22 @@ function chrtLine() {
         //   "yDomain:",
         //   yDomain
         // );
-        datasetsForLine.forEach((dataset) => {
+        datasetsForLine.forEach(dataset => {
           const dataForAreaBaseline =
             this._stacked || this.hasCustomBaseline
-              ? [...dataset].reverse().map((d) =>
+              ? [...dataset].reverse().map(d =>
                   horizontalArea
                     ? {
                         x: d[this.fields[coords.x0]],
                         y: d[this.fields[coords.y]],
                         [this.fields[coords.x0]]: d[this.fields[coords.x0]],
-                        [this.fields[coords.y]]: d[this.fields[coords.y]],
+                        [this.fields[coords.y]]: d[this.fields[coords.y]]
                       }
                     : {
                         x: d[this.fields[coords.x]],
                         y: d[this.fields[coords.y0]],
                         [this.fields[coords.x]]: d[this.fields[coords.x]],
-                        [this.fields[coords.y0]]: d[this.fields[coords.y0]],
+                        [this.fields[coords.y0]]: d[this.fields[coords.y0]]
                       }
                 )
               : [
@@ -206,32 +207,36 @@ function chrtLine() {
                         x: zero,
                         y: dataset[dataset.length - 1][this.fields[coords.y]],
                         [this.fields[coords.x]]: zero,
-                        [this.fields[coords.y]]: dataset[dataset.length - 1][this.fields[coords.y]],
+                        [this.fields[coords.y]]:
+                          dataset[dataset.length - 1][this.fields[coords.y]]
                       }
                     : {
                         x: dataset[dataset.length - 1][this.fields[coords.x]],
                         y: zero,
-                        [this.fields[coords.x]]: dataset[dataset.length - 1][this.fields[coords.x]],
-                        [this.fields[coords.y]]: zero,
+                        [this.fields[coords.x]]:
+                          dataset[dataset.length - 1][this.fields[coords.x]],
+                        [this.fields[coords.y]]: zero
                       },
                   horizontalArea
                     ? {
                         x: zero,
                         y: dataset[0][this.fields[coords.y]],
                         [this.fields[coords.x]]: zero,
-                        [this.fields[coords.y]]: dataset[0][this.fields[coords.y]],
+                        [this.fields[coords.y]]:
+                          dataset[0][this.fields[coords.y]]
                       }
                     : {
                         x: dataset[0][this.fields[coords.x]],
                         y: zero,
-                        [this.fields[coords.x]]: dataset[0][this.fields[coords.x]],
-                        [this.fields[coords.y]]: zero,
-                      },
+                        [this.fields[coords.x]]:
+                          dataset[0][this.fields[coords.x]],
+                        [this.fields[coords.y]]: zero
+                      }
                 ];
           datasetsForArea.push(dataForAreaBaseline);
         });
       }
-      if (this._area && this.areaPaths.length > 0) {
+      if (_area && this.areaPaths.length > 0) {
         // console.log("datasetsForArea", datasetsForArea);
         datasetsForArea.forEach((dataset, i) => {
           const areaPath = this.areaPaths[i];
@@ -241,8 +246,8 @@ function chrtLine() {
           );
           // console.log("dArea", dArea, 'from', datasetsForLine[i], dataset);
           areaPath.setAttribute('d', dArea.join(''));
-          areaPath.setAttribute('fill', this._fill);
-          areaPath.setAttribute('fill-opacity', this._fillOpacity);
+          areaPath.setAttribute('fill', this.attr('fill')());
+          areaPath.setAttribute('fill-opacity', this.attr('fillOpacity')());
           areaPath.setAttribute('stroke', 'none');
         });
       }
@@ -254,14 +259,14 @@ function chrtLine() {
         // console.log('d', d)
         const path = this.paths[i];
         path.setAttribute('d', d.join(''));
-        path.setAttribute('stroke', this.stroke);
-        path.setAttribute('stroke-width', this.strokeWidth);
-        path.setAttribute('stroke-opacity', this.strokeOpacity);
+        path.setAttribute('stroke', this.attr('stroke')());
+        path.setAttribute('stroke-width', this.attr('strokeWidth')());
+        path.setAttribute('stroke-opacity', this.attr('strokeOpacity')());
         path.setAttribute('stroke-linejoin', 'round');
         path.setAttribute('fill', 'none');
       });
 
-      datasetsForPoints.forEach((dataset) => {
+      datasetsForPoints.forEach(dataset => {
         const singlePoints = dataset.filter((d, i, points) => {
           return (
             (isNull(points[i - 1]) ||
@@ -275,35 +280,40 @@ function chrtLine() {
         // TODO: if the data changes and new single points are added they won't be rendered
         if (!this.points) {
           this.points = [];
-          singlePoints.forEach((point) => {
+          singlePoints.forEach(point => {
             const circle = create('circle');
             this.points.push({
               circle,
-              point,
+              point
             });
             this.g.appendChild(circle);
           });
         }
-        this.points.forEach((d) => {
-          d.circle.setAttribute(
-            'cx',
-            this.parentNode.scales[coords.x][this.scales[coords.x]](
-              d.point[this.fields[coords.x]]
-            )
+        this.points.forEach(d => {
+          const cx = this.parentNode.scales[coords.x][this.scales[coords.x]](
+            d.point[this.fields[coords.x]]
           );
-          d.circle.setAttribute(
-            'cy',
-            this.parentNode.scales[coords.y][this.scales[coords.y]](
-              d.point[this.fields[coords.y]]
-            )
+          if(!isNaN(cx)) {
+            d.circle.setAttribute(
+              'cx', cx
+            );
+          }
+          const cy = this.parentNode.scales[coords.y][this.scales[coords.y]](
+            d.point[this.fields[coords.y]]
           );
-          d.circle.setAttribute('fill', this.stroke);
-          d.circle.setAttribute('r', this.strokeWidth);
+          if(!isNaN(cy)) {
+            d.circle.setAttribute(
+              'cy',
+              cy
+            );
+          }
+          d.circle.setAttribute('fill', this.attr('stroke')());
+          d.circle.setAttribute('r', this.attr('strokeWidth')());
         });
       });
     }
 
-    this.objects.forEach((obj) => obj.draw());
+    this.objects.forEach(obj => obj.draw());
 
     return this.parentNode;
   };
@@ -315,17 +325,20 @@ chrtLine.parent = chrtGeneric.prototype;
 
 chrtLine.prototype = Object.assign(chrtLine.prototype, {
   width: lineWidth,
+  strokeWidth: lineWidth,
   color: lineColor,
+  stroke: lineColor,
   opacity: lineOpacity,
+  strokeOpacity: lineOpacity,
   area,
   fill: fillColor,
   fillOpacity,
   zero,
-  sort,
+  sort
 });
 
 // export default chrtLine;
 
-export default function () {
+export default function() {
   return new chrtLine();
 }

@@ -10,3 +10,7 @@ export { default as dataFromChrt } from './data-from-chrt.js';
 export { default as negativeYDomain } from './y-negative-domain.js';
 export { default as unsortedData } from './unsorted-data.js';
 export { default as dataFromChrtLine } from './data-from-chrt-line.js';
+export { default as dataAsSimpleArrayOfNumbers } from './data-as-simple-array-of-numbers.js';
+export { default as dataAsSimpleArrayOfNumbersToChrtLine } from './data-as-simple-array-of-numbers-chrtLine.js';
+export { default as dataAsSimpleArrayOfObjects } from './data-as-simple-array-of-objects.js';
+export { default as dataAsSimpleArrayOfObjectsToChrtLine } from './data-as-simple-array-of-objects-chrtLine.js';

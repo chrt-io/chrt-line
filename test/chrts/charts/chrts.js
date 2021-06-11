@@ -9,3 +9,4 @@ export { default as stackedArea } from './stacked-area-chart.js';
 export { default as dataFromChrt } from './data-from-chrt.js';
 export { default as negativeYDomain } from './y-negative-domain.js';
 export { default as unsortedData } from './unsorted-data.js';
+export { default as dataFromChrtLine } from './data-from-chrt-line.js';

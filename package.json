@@ -1,6 +1,6 @@
 {
   "name": "chrt-line",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Line chart component for Chrt",
   "main": "dist/chrt-line.js",
   "module": "dist/chrt-line.esm.js",

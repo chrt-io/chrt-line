@@ -104,9 +104,13 @@ function chrtLine() {
       this.hasCustomBaseline =
         _area && _data.some(d => !isNull(d[this.fields[coords.y0]]));
       // console.log('hasCustomBaseline', this.hasCustomBaseline)
-
+      const _scaleY = this.parentNode.scales[coords.y][this.scales[coords.y]];
       let datasetsForLine = _data.reduce((acc, d) => {
-        if (isNull(d) || isNull(d[this.fields[coords.y]])) {
+        if (
+          isNull(d) ||
+          isNull(d[this.fields[coords.y]]) ||
+          isNaN(_scaleY(d[this.fields[coords.y]]))
+        ) {
           acc.push([]);
           return acc;
         }
@@ -256,7 +260,6 @@ function chrtLine() {
       datasetsForLine.forEach((dataset, i) => {
         // console.log('interpolationFunction', this.interpolationFunction)
         const d = this.interpolationFunction([].concat(dataset));
-        // console.log('d', d)
         const path = this.paths[i];
         path.setAttribute('d', d.join(''));
         path.setAttribute('stroke', this.attr('stroke')());

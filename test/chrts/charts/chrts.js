@@ -14,3 +14,4 @@ export { default as dataAsSimpleArrayOfNumbers } from './data-as-simple-array-of
 export { default as dataAsSimpleArrayOfNumbersToChrtLine } from './data-as-simple-array-of-numbers-chrtLine.js';
 export { default as dataAsSimpleArrayOfObjects } from './data-as-simple-array-of-objects.js';
 export { default as dataAsSimpleArrayOfObjectsToChrtLine } from './data-as-simple-array-of-objects-chrtLine.js';
+export { default as scaleLogAndZero } from './zero-value-log.js';

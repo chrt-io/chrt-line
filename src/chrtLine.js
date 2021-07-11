@@ -98,8 +98,7 @@ function chrtLine() {
           zero = yDomain[0] < 0 || yDomain[1] < 0 ? 0 : Math.min(...yDomain);
       }
 
-      const _zero = this.attr('zero');
-      zero = !isNull(_zero) ? _zero() : zero;
+      zero = this.attr('zero')() ?? zero;
 
       this.hasCustomBaseline =
         _area && _data.some(d => !isNull(d[this.fields[coords.y0]]));
@@ -244,7 +243,6 @@ function chrtLine() {
         // console.log("datasetsForArea", datasetsForArea);
         datasetsForArea.forEach((dataset, i) => {
           const areaPath = this.areaPaths[i];
-          // console.log("areaPath", areaPath);
           const dArea = this.interpolationFunction(
             [].concat(datasetsForLine[i], dataset)
           );

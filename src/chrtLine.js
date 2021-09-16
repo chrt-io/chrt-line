@@ -76,6 +76,7 @@ function chrtLine() {
     }
     // console.log('LINECHART FIELDS', this.fields)
     // console.log('LINECHART COORDS:', coords)
+    // console.log('_data', _data)
     if (!isNull(_data)) {
       const yDomain = this.parentNode.scales[coords.y][this.scales[coords.y]]
         .domain;
@@ -266,7 +267,6 @@ function chrtLine() {
         path.setAttribute('stroke-linejoin', 'round');
         path.setAttribute('fill', 'none');
       });
-
       datasetsForPoints.forEach(dataset => {
         const singlePoints = dataset.filter((d, i, points) => {
           return (
@@ -277,7 +277,6 @@ function chrtLine() {
               isNull(points[i + 1][this.fields[coords.y]]))
           );
         });
-
         // TODO: if the data changes and new single points are added they won't be rendered
         if (!this.points) {
           this.points = [];
@@ -312,11 +311,44 @@ function chrtLine() {
           d.circle.setAttribute('r', this.attr('strokeWidth')());
         });
       });
+
+      // Setting anchors
+      // console.log('anchors', _data)
+      _data.filter(d => d).forEach(d => {
+        const cx = this.parentNode.scales[coords.x][this.scales[coords.x]](
+          this._stacked
+            ? d[`stacked_${this.fields[coords.x]}`]
+            : d?.[this.fields[coords.x]],
+        );
+        const cy = this.parentNode.scales[coords.y][this.scales[coords.y]](
+          this._stacked
+            ? d[`stacked_${this.fields[coords.y]}`]
+            : d?.[this.fields[coords.y]],
+        );
+
+        d.anchorPoints = {
+            x: cx,
+            width: 0,
+            y: cy,
+            height: 0,
+            relativePosition: [0,-1],
+            directions: {
+              x: 1,
+              y: 1,
+            },
+            alignment: {
+              horizontal: 'middle',
+              vertical: 'top',
+            }
+          };
+
+      });
+
     }
 
     this.objects.forEach(obj => obj.draw());
 
-    return this; // .parentNode;
+    return this;
   };
 }
 

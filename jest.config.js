@@ -170,11 +170,7 @@ export default {
   // transformIgnorePatterns: [
   //   "/node_modules/"
   // ],
-  transformIgnorePatterns: [
-   'node_modules/(?!(chrt' +
-     // + "|some-folder"
-     ')/)'
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(chrt|chrt-object)/)'],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

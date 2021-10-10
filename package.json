@@ -10,13 +10,12 @@
     "visualization"
   ],
   "type": "module",
-  "main": "dist/chrt-line.js",
+  "main": "src/index.js",
   "module": "dist/chrt-line.esm.js",
   "jsdelivr": "dist/chrt-line.min.js",
   "unpkg": "dist/chrt-line.min.js",
   "exports": {
     "umd": "./dist/chrt-line.min.js",
-    "require": "./dist/chrt-line.node.js",
     "default": "./dist/chrt-line.esm.js"
   },
   "watch": {
@@ -33,7 +32,8 @@
     "build": "rollup -c",
     "lint": "eslint src --fix",
     "watch": "npm-watch",
-    "dev": "budo test/chrts/index.js:bundle.js --live --dir test/chrts  -- -t [ babelify --extensions .js  --global true ]"
+    "dev": "budo test/chrts/index.js:bundle.js --live --dir test/chrts  -- -t [ babelify --extensions .js  --global true ]",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {

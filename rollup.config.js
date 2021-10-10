@@ -67,13 +67,13 @@ export default [
       })
     ]
   },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      format: 'cjs',
-      file: `dist/${meta.name}.node.js`
-    },
-    plugins: [...config.plugins]
-  }
+  // {
+  //   ...config,
+  //   output: {
+  //     ...config.output,
+  //     format: 'cjs',
+  //     file: `dist/${meta.name}.node.js`
+  //   },
+  //   plugins: [...config.plugins]
+  // }
 ];

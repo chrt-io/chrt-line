@@ -1,6 +1,6 @@
 import * as chrt from 'chrt';
 // import Chrt from 'chrt-core';
-import chrtLine from '~/chrtLine'
+import chrtLine from '../../../src/chrtLine'
 
 const data = [
   {

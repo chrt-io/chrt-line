@@ -1,5 +1,5 @@
 import * as chrt from 'chrt';
-import chrtLine from '~/chrtLine'
+import chrtLine from '../../../src/chrtLine'
 
 const data = [0,2,6,2,5,9,4,5].map((d,i) => ({x:i,y:d}));
 

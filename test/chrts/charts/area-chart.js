@@ -1,5 +1,5 @@
 import * as chrt from 'chrt';
-import chrtLine from '~/chrtLine'
+import {chrtLine} from '../../../src/'
 
 const data = [
   {

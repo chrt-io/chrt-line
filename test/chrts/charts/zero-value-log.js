@@ -1,6 +1,6 @@
 import * as chrt from 'chrt';
 // import { yAxis } from 'chrt-axis';
-import chrtLine from '~/chrtLine'
+import chrtLine from '../../../src/chrtLine'
 //import Chrt from 'chrt-core';
 
 export default async function(container) {

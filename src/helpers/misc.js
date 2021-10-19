@@ -1,4 +1,4 @@
-import {COMPONENTS_W_DATA} from '~/constants';
+import {COMPONENTS_W_DATA} from '../constants';
 
 export function isNull(value) {
   return value === null || value == null || typeof value === 'undefined';
@@ -22,6 +22,6 @@ export function isInfinity(value) {
   return !isFinite(value);
 }
 
-export function oppositeSigns(x, y) { 
+export function oppositeSigns(x, y) {
     return ((x ^ y) < 0);
 }

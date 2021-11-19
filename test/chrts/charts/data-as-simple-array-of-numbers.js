@@ -12,6 +12,7 @@ export default async function(container) {
     .add(chrt.yAxis())
     .add(
       chrtLine()
+        .class(['test-class1','test-class2'])
     );
   return chart
 }

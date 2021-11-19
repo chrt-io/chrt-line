@@ -1,7 +1,5 @@
-import chrtGeneric from 'chrt-object';
+import chrtObject, { utils } from 'chrt-object';
 import { line } from 'chrt-interpolations';
-import { isNull } from './helpers';
-import { createSVG as create } from './layout';
 import {
   lineWidth,
   lineColor,
@@ -13,6 +11,8 @@ import {
   sort
 } from './lib';
 
+const { isNull, createSVG: create } = utils;
+
 const DEFAULT_LINE_WIDTH = 1;
 const DEAULT_LINE_COLOR = '#000';
 const DEFAULT_LINE_OPACITY = 1;
@@ -20,8 +20,8 @@ const DEAULT_FILL_COLOR = '#000';
 const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
-  chrtGeneric.call(this);
-  // console.log(chrtGeneric)
+  chrtObject.call(this);
+  // console.log(chrtObject)
   // console.log(this.render)
   this.type = 'series';
   // _area = false;
@@ -54,7 +54,9 @@ function chrtLine() {
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
     const _area = this.attr('area')();
-    this._classNames.forEach(d => this.g.classList.add(d));
+
+    this.g.classList.remove(...this.g.classList)
+    this.g.classList.add(...this._classNames);
 
     //console.log('LINECHART FIELDS', this.fields)
     if (isNull(this.fields[coords.x])) {
@@ -352,9 +354,9 @@ function chrtLine() {
   };
 }
 
-chrtLine.prototype = Object.create(chrtGeneric.prototype);
+chrtLine.prototype = Object.create(chrtObject.prototype);
 chrtLine.prototype.constructor = chrtLine;
-chrtLine.parent = chrtGeneric.prototype;
+chrtLine.parent = chrtObject.prototype;
 
 chrtLine.prototype = Object.assign(chrtLine.prototype, {
   width: lineWidth,

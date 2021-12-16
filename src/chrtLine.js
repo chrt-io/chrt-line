@@ -346,9 +346,12 @@ function chrtLine() {
 
       });
 
+      if(this.paths.length || this.areaPaths.length) {
+        this.objects.forEach(obj => obj.draw());
+      }
     }
 
-    this.objects.forEach(obj => obj.draw());
+
 
     return this;
   };

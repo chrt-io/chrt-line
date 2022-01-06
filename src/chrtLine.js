@@ -1,4 +1,4 @@
-import chrtObject, { utils } from 'chrt-object';
+import chrtObject, { utils, cssDisplay } from 'chrt-object';
 import { line } from 'chrt-interpolations';
 import {
   lineWidth,
@@ -54,6 +54,8 @@ function chrtLine() {
   this.draw = () => {
     const _data = this._data.length ? this._data : this.parentNode._data;
     const _area = this.attr('area')();
+
+    cssDisplay.call(this, this.attr('display')());
 
     this.g.classList.remove(...this.g.classList)
     this.g.classList.add(...this._classNames);
@@ -350,8 +352,6 @@ function chrtLine() {
         this.objects.forEach(obj => obj.draw());
       }
     }
-
-
 
     return this;
   };

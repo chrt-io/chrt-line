@@ -37,5 +37,7 @@ export default async function(container) {
         .width(0.5)
         .color('#f00')
         .opacity(0.8)
+        .hide()
+        .show()
     );
 }

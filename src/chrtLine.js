@@ -1,5 +1,5 @@
 import chrtObject, { utils, cssDisplay } from 'chrt-object';
-import { line } from 'chrt-interpolations';
+import { linear } from 'chrt-interpolations';
 import {
   lineWidth,
   lineColor,
@@ -38,7 +38,7 @@ function chrtLine() {
     y0: 'y0'
   };
 
-  this.interpolationFunction = line;
+  this.interpolationFunction = linear;
 
   this.attr('strokeWidth', DEFAULT_LINE_WIDTH);
   this.attr('stroke', DEAULT_LINE_COLOR);

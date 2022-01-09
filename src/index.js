@@ -1,1 +1,1 @@
-export { default as chrtLine } from './chrtLine';
+export { default as Line } from './chrtLine';

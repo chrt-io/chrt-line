@@ -52,7 +52,7 @@
   },
   "homepage": "chrt.io",
   "dependencies": {
-    "chrt-interpolations": "0.0.12",
+    "chrt-interpolations": "0.0.13",
     "chrt-object": "0.0.15"
   },
   "devDependencies": {
@@ -66,7 +66,7 @@
     "babel-plugin-root-import": "^6.6.0",
     "babelify": "^10.0.0",
     "budo": "^11.6.4",
-    "chrt": "0.0.129",
+    "chrt": "0.0.130",
     "eslint": "^8.6.0",
     "husky": "^7.0.4",
     "jest": "^27.4.7",

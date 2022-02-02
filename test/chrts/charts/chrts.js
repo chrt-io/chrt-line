@@ -17,3 +17,4 @@ export { default as dataAsSimpleArrayOfObjectsToChrtLine } from './data-as-simpl
 export { default as scaleLogAndZero } from './zero-value-log.js';
 export { default as oneNumberValue } from './one-number-value.js';
 export { default as oneDateValue } from './one-date-value.js';
+export { default as confidenceInterval } from './confidence-interval-chart.js';

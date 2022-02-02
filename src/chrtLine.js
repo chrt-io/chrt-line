@@ -21,8 +21,6 @@ const DEFAULT_FILL_OPACITY = 1;
 
 function chrtLine() {
   chrtObject.call(this);
-  // console.log(chrtObject)
-  // console.log(this.render)
   this.type = 'series';
   // _area = false;
   this.attr('area', false);
@@ -60,7 +58,6 @@ function chrtLine() {
     this.g.classList.remove(...this.g.classList)
     this.g.classList.add(...this._classNames);
 
-    //console.log('LINECHART FIELDS', this.fields)
     if (isNull(this.fields[coords.x])) {
       this.fields[coords.x] = this.parentNode.scales[coords.x][
         this.scales[coords.x]
@@ -104,10 +101,8 @@ function chrtLine() {
       }
 
       zero = this.attr('zero')() ?? zero;
-
       this.hasCustomBaseline =
         _area && _data.some(d => !isNull(d[this.fields[coords.y0]]));
-      // console.log('hasCustomBaseline', this.hasCustomBaseline)
       const _scaleY = this.parentNode.scales[coords.y][this.scales[coords.y]];
       let datasetsForLine = _data.reduce((acc, d) => {
         if (
@@ -127,18 +122,23 @@ function chrtLine() {
                 [this.fields[coords.x]]: d[this.fields[coords.x]],
                 [this.fields[coords.y]]: d[this.fields[coords.y]],
                 x: d[this.fields[coords.x]],
-                y: this._stacked
-                  ? d[`stacked_${this.fields[coords.y]}`]
-                  : d[this.fields[coords.y]],
-                y0: !isNull(d[this.fields[coords.y0]])
-                  ? d[this.fields[coords.y0]]
-                  : zero
+                y: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y]}`],
+                // y: this._stacked
+                //   ? d[`stacked_${this.fields[coords.y]}`]
+                //   : d[this.fields[coords.y]],
+                y0: !isNull(d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`])
+                  ? d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
+                  : zero,
+                // y0: !isNull(d[this.fields[coords.y0]])
+                //   ? d[this.fields[coords.y0]]
+                //   : zero
                 // x0: !isNull(d[this.fields[coords.x0]]) ? d[this.fields[coords.x0]] : zero,
               }
             : d;
         acc[acc.length - 1].push(datumForLine);
         return acc;
       }, []);
+      // console.log('datasetsForLine', datasetsForLine)
 
       if (this.attr('sortedData')()) {
         const _scaleX = this.parentNode.scales[coords.x][this.scales[coords.x]];
@@ -199,14 +199,14 @@ function chrtLine() {
                     ? {
                         x: d[this.fields[coords.x0]],
                         y: d[this.fields[coords.y]],
-                        [this.fields[coords.x0]]: d[this.fields[coords.x0]],
+                        [this.fields[coords.x0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.x0]}`],
                         [this.fields[coords.y]]: d[this.fields[coords.y]]
                       }
                     : {
                         x: d[this.fields[coords.x]],
                         y: d[this.fields[coords.y0]],
                         [this.fields[coords.x]]: d[this.fields[coords.x]],
-                        [this.fields[coords.y0]]: d[this.fields[coords.y0]]
+                        [this.fields[coords.y0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
                       }
                 )
               : [

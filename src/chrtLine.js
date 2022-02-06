@@ -241,18 +241,27 @@ function chrtLine() {
                         [this.fields[coords.y]]: zero
                       }
                 ];
+          // console.log('dataForAreaBaseline', dataForAreaBaseline)
           datasetsForArea.push(dataForAreaBaseline);
+          // console.log('NOW datasetsForArea is', datasetsForArea)
         });
       }
       if (_area && this.areaPaths.length > 0) {
         // console.log("datasetsForArea", datasetsForArea);
         datasetsForArea.forEach((dataset, i) => {
           const areaPath = this.areaPaths[i];
-          const dArea = this.interpolationFunction(
-            [].concat(datasetsForLine[i], dataset)
-          );
-          // console.log("dArea", dArea, 'from', datasetsForLine[i], dataset);
-          areaPath.setAttribute('d', dArea.join(''));
+          // const dArea = this.interpolationFunction(
+          //   //[].concat(datasetsForLine[i])
+          //   [].concat(datasetsForLine[i], dataset)
+          // );
+          const dAreas = [
+            this.interpolationFunction([].concat(datasetsForLine[i])),
+            this.interpolationFunction([].concat(dataset)),
+          ]
+          dAreas[1][0] = dAreas?.[1]?.[0].replace(/M/,'L') || [];
+          //console.log("dArea", dArea, 'from', datasetsForLine[i], dataset);
+          // console.log('dAreas', dAreas)
+          areaPath.setAttribute('d', ([...dAreas[0],...dAreas[1]]).join(''));
           areaPath.setAttribute('fill', this.attr('fill')());
           areaPath.setAttribute('fill-opacity', this.attr('fillOpacity')());
           areaPath.setAttribute('stroke', 'none');

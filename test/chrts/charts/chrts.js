@@ -18,3 +18,6 @@ export { default as scaleLogAndZero } from './zero-value-log.js';
 export { default as oneNumberValue } from './one-number-value.js';
 export { default as oneDateValue } from './one-date-value.js';
 export { default as confidenceInterval } from './confidence-interval-chart.js';
+export { default as areaChartWithSpline } from './area-chart-spline.js';
+export { default as confidenceIntervalWithSpline } from './confidence-interval-chart-with-spline.js';
+export { default as stackedAreaWithSpline } from './stacked-area-chart-with-spline.js';

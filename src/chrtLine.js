@@ -293,6 +293,7 @@ function chrtLine() {
         // TODO: if the data changes and new single points are added they won't be rendered
         if (!this.points) {
           this.points = [];
+          this.g.querySelectorAll('circle').forEach(d => d.remove());
           singlePoints.forEach(point => {
             const circle = create('circle');
             this.points.push({
@@ -338,7 +339,6 @@ function chrtLine() {
             ? d[`stacked_${this.fields[coords.y]}`]
             : d?.[this.fields[coords.y]],
         );
-
         d.anchorPoints = {
             x: cx,
             width: 0,

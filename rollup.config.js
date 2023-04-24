@@ -2,7 +2,10 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import * as meta from './package.json';
+import { default as meta } from './package.json' assert {
+  type: 'json',
+};
+// import * as meta from './package.json';
 
 const STARTED = 2020;
 const YEAR = new Date().getFullYear();
@@ -19,9 +22,8 @@ const config = {
     indent: false,
     extend: true,
     exports: 'named',
-    banner: `// ${meta.name} v${meta.version} Copyright ${
-      YEAR !== STARTED ? `${STARTED}-` : ''
-    }${YEAR} ${meta.author} ${meta.homepage}`,
+    banner: `// ${meta.name} v${meta.version} Copyright ${YEAR !== STARTED ? `${STARTED}-` : ''
+      }${YEAR} ${meta.author} ${meta.homepage}`,
     globals: Object.assign(
       {},
       ...Object.keys(meta.dependencies || {})

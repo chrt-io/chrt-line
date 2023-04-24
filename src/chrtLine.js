@@ -71,9 +71,8 @@ function chrtLine() {
       ].field;
     }
     if (isNull(this.fields[coords.y0])) {
-      this.fields[coords.y0] = `${
-        this.parentNode.scales[coords.y][this.scales[coords.y]].field
-      }0`;
+      this.fields[coords.y0] = `${this.parentNode.scales[coords.y][this.scales[coords.y]].field
+        }0`;
     }
     // console.log('LINECHART FIELDS', this.fields)
     // console.log('LINECHART COORDS:', coords)
@@ -119,21 +118,21 @@ function chrtLine() {
         const datumForLine =
           this._stacked || this.hasCustomBaseline
             ? {
-                [this.fields[coords.x]]: d[this.fields[coords.x]],
-                [this.fields[coords.y]]: d[this.fields[coords.y]],
-                x: d[this.fields[coords.x]],
-                y: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y]}`],
-                // y: this._stacked
-                //   ? d[`stacked_${this.fields[coords.y]}`]
-                //   : d[this.fields[coords.y]],
-                y0: !isNull(d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`])
-                  ? d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
-                  : zero,
-                // y0: !isNull(d[this.fields[coords.y0]])
-                //   ? d[this.fields[coords.y0]]
-                //   : zero
-                // x0: !isNull(d[this.fields[coords.x0]]) ? d[this.fields[coords.x0]] : zero,
-              }
+              [this.fields[coords.x]]: d[this.fields[coords.x]],
+              [this.fields[coords.y]]: d[this.fields[coords.y]],
+              x: d[this.fields[coords.x]],
+              y: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y]}`],
+              // y: this._stacked
+              //   ? d[`stacked_${this.fields[coords.y]}`]
+              //   : d[this.fields[coords.y]],
+              y0: !isNull(d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`])
+                ? d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
+                : zero,
+              // y0: !isNull(d[this.fields[coords.y0]])
+              //   ? d[this.fields[coords.y0]]
+              //   : zero
+              // x0: !isNull(d[this.fields[coords.x0]]) ? d[this.fields[coords.x0]] : zero,
+            }
             : d;
         acc[acc.length - 1].push(datumForLine);
         return acc;
@@ -195,52 +194,52 @@ function chrtLine() {
           const dataForAreaBaseline =
             this._stacked || this.hasCustomBaseline
               ? [...dataset].reverse().map(d =>
-                  horizontalArea
-                    ? {
-                        x: d[this.fields[coords.x0]],
-                        y: d[this.fields[coords.y]],
-                        [this.fields[coords.x0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.x0]}`],
-                        [this.fields[coords.y]]: d[this.fields[coords.y]]
-                      }
-                    : {
-                        x: d[this.fields[coords.x]],
-                        y: d[this.fields[coords.y0]],
-                        [this.fields[coords.x]]: d[this.fields[coords.x]],
-                        [this.fields[coords.y0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
-                      }
-                )
+                horizontalArea
+                  ? {
+                    x: d[this.fields[coords.x0]],
+                    y: d[this.fields[coords.y]],
+                    [this.fields[coords.x0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.x0]}`],
+                    [this.fields[coords.y]]: d[this.fields[coords.y]]
+                  }
+                  : {
+                    x: d[this.fields[coords.x]],
+                    y: d[this.fields[coords.y0]],
+                    [this.fields[coords.x]]: d[this.fields[coords.x]],
+                    [this.fields[coords.y0]]: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
+                  }
+              )
               : [
-                  horizontalArea
-                    ? {
-                        x: zero,
-                        y: dataset[dataset.length - 1][this.fields[coords.y]],
-                        [this.fields[coords.x]]: zero,
-                        [this.fields[coords.y]]:
-                          dataset[dataset.length - 1][this.fields[coords.y]]
-                      }
-                    : {
-                        x: dataset[dataset.length - 1][this.fields[coords.x]],
-                        y: zero,
-                        [this.fields[coords.x]]:
-                          dataset[dataset.length - 1][this.fields[coords.x]],
-                        [this.fields[coords.y]]: zero
-                      },
-                  horizontalArea
-                    ? {
-                        x: zero,
-                        y: dataset[0][this.fields[coords.y]],
-                        [this.fields[coords.x]]: zero,
-                        [this.fields[coords.y]]:
-                          dataset[0][this.fields[coords.y]]
-                      }
-                    : {
-                        x: dataset[0][this.fields[coords.x]],
-                        y: zero,
-                        [this.fields[coords.x]]:
-                          dataset[0][this.fields[coords.x]],
-                        [this.fields[coords.y]]: zero
-                      }
-                ];
+                horizontalArea
+                  ? {
+                    x: zero,
+                    y: dataset[dataset.length - 1][this.fields[coords.y]],
+                    [this.fields[coords.x]]: zero,
+                    [this.fields[coords.y]]:
+                      dataset[dataset.length - 1][this.fields[coords.y]]
+                  }
+                  : {
+                    x: dataset[dataset.length - 1][this.fields[coords.x]],
+                    y: zero,
+                    [this.fields[coords.x]]:
+                      dataset[dataset.length - 1][this.fields[coords.x]],
+                    [this.fields[coords.y]]: zero
+                  },
+                horizontalArea
+                  ? {
+                    x: zero,
+                    y: dataset[0][this.fields[coords.y]],
+                    [this.fields[coords.x]]: zero,
+                    [this.fields[coords.y]]:
+                      dataset[0][this.fields[coords.y]]
+                  }
+                  : {
+                    x: dataset[0][this.fields[coords.x]],
+                    y: zero,
+                    [this.fields[coords.x]]:
+                      dataset[0][this.fields[coords.x]],
+                    [this.fields[coords.y]]: zero
+                  }
+              ];
           // console.log('dataForAreaBaseline', dataForAreaBaseline)
           datasetsForArea.push(dataForAreaBaseline);
           // console.log('NOW datasetsForArea is', datasetsForArea)
@@ -258,10 +257,10 @@ function chrtLine() {
             this.interpolationFunction([].concat(datasetsForLine[i])),
             this.interpolationFunction([].concat(dataset)),
           ]
-          dAreas[1][0] = dAreas?.[1]?.[0].replace(/M/,'L') || [];
+          dAreas[1][0] = dAreas?.[1]?.[0].replace(/M/, 'L') || [];
           //console.log("dArea", dArea, 'from', datasetsForLine[i], dataset);
           // console.log('dAreas', dAreas)
-          areaPath.setAttribute('d', ([...dAreas[0],...dAreas[1]]).join(''));
+          areaPath.setAttribute('d', ([...dAreas[0], ...dAreas[1]]).join(''));
           areaPath.setAttribute('fill', this.attr('fill')());
           areaPath.setAttribute('fill-opacity', this.attr('fillOpacity')());
           areaPath.setAttribute('stroke', 'none');
@@ -307,7 +306,7 @@ function chrtLine() {
           const cx = this.parentNode.scales[coords.x][this.scales[coords.x]](
             d.point[this.fields[coords.x]]
           );
-          if(!isNaN(cx)) {
+          if (!isNaN(cx)) {
             d.circle.setAttribute(
               'cx', cx
             );
@@ -315,7 +314,7 @@ function chrtLine() {
           const cy = this.parentNode.scales[coords.y][this.scales[coords.y]](
             d.point[this.fields[coords.y]]
           );
-          if(!isNaN(cy)) {
+          if (!isNaN(cy)) {
             d.circle.setAttribute(
               'cy',
               cy
@@ -340,24 +339,24 @@ function chrtLine() {
             : d?.[this.fields[coords.y]],
         );
         d.anchorPoints = {
-            x: cx,
-            width: 0,
-            y: cy,
-            height: 0,
-            relativePosition: [0,-1],
-            directions: {
-              x: 1,
-              y: 1,
-            },
-            alignment: {
-              horizontal: 'middle',
-              vertical: 'top',
-            }
-          };
+          x: cx,
+          width: 0,
+          y: cy,
+          height: 0,
+          relativePosition: [0, -1],
+          directions: {
+            x: 1,
+            y: 1,
+          },
+          alignment: {
+            horizontal: 'middle',
+            vertical: 'top',
+          }
+        };
 
       });
 
-      if(this.paths.length || this.areaPaths.length) {
+      if (this.paths.length || this.areaPaths.length) {
         this.objects.forEach(obj => obj.draw());
       }
     }

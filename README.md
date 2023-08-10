@@ -1,5 +1,7 @@
 # chrt-line
-Line charts component for **chrt**
+Component for the creation of **Line charts** and **Area charts** in `chrt`.   Line charts are used to display data as a series of points connected by line segments. A line chart is often used to visualize a trend in data over intervals of time.
+
+In Area charts, the area between axis and line are painted with colors, textures or hatchings, they facilitate the comparison of two or more quantities.
 
 ## How to build
 

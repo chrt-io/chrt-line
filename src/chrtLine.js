@@ -122,22 +122,14 @@ function chrtLine() {
               [this.fields[coords.y]]: d[this.fields[coords.y]],
               x: d[this.fields[coords.x]],
               y: d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y]}`],
-              // y: this._stacked
-              //   ? d[`stacked_${this.fields[coords.y]}`]
-              //   : d[this.fields[coords.y]],
               y0: !isNull(d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`])
                 ? d[`${this._stacked ? 'stacked_' : ''}${this.fields[coords.y0]}`]
                 : zero,
-              // y0: !isNull(d[this.fields[coords.y0]])
-              //   ? d[this.fields[coords.y0]]
-              //   : zero
-              // x0: !isNull(d[this.fields[coords.x0]]) ? d[this.fields[coords.x0]] : zero,
             }
             : d;
         acc[acc.length - 1].push(datumForLine);
         return acc;
       }, []);
-      // console.log('datasetsForLine', datasetsForLine)
 
       if (this.attr('sortedData')()) {
         const _scaleX = this.parentNode.scales[coords.x][this.scales[coords.x]];

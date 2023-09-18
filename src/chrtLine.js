@@ -55,6 +55,11 @@ function chrtLine() {
 
     cssDisplay.call(this, this.attr('display')());
 
+    this.g.setAttribute('id', `${_area ? 'area' : 'line'}-${this.id()}`);
+    console.log('PARENT', this.parent().objects)
+
+    console.log('THIS', this.constructor.name)
+    this.g.setAttribute('data-id', `${this.constructor.name}-${this.parent().objects.filter(d => d.constructor.name === this.constructor.name).indexOf(this)}`);
     this.g.classList.remove(...this.g.classList)
     this.g.classList.add(...this._classNames);
 

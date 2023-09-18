@@ -21,3 +21,4 @@ export { default as confidenceInterval } from './confidence-interval-chart.js';
 export { default as areaChartWithSpline } from './area-chart-spline.js';
 export { default as confidenceIntervalWithSpline } from './confidence-interval-chart-with-spline.js';
 export { default as stackedAreaWithSpline } from './stacked-area-chart-with-spline.js';
+export { default as multipleLines } from './multiple-lines.js';

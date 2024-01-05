@@ -1,7 +1,17 @@
-# chrt-line
-Component for the creation of **Line charts** and **Area charts** in `chrt`.   Line charts are used to display data as a series of points connected by line segments. A line chart is often used to visualize a trend in data over intervals of time.
+# chrt-line: Line and Area Chart Module
 
-In Area charts, the area between axis and line are painted with colors, textures or hatchings, they facilitate the comparison of two or more quantities.
+The `chrt-line` module in the Chrt library facilitates the creation of Line charts and Area charts. Line charts visually represent data trends over intervals, connecting data points through line segments. Area charts, on the other hand, paint the area between the axis and line with customizable colors, textures, or hatchings, aiding in the comparison of two or more quantities.
+
+### Key Features:
+
+- **Line Charts:** Utilize the module to create Line charts, suitable for displaying trends in data over time.
+
+- **Area Charts:** Leverage the functionality for Area charts, enhancing the comparison of quantities by filling the area between the axis and line with visual elements.
+
+### Observable Examples and Documentation:
+
+[Chrt Line Charts - Observable](https://observablehq.com/@chrt/line-charts?collection=@chrt/chrt)
+
 
 ## How to build
 
